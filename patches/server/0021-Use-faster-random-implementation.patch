@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
+Date: Wed, 28 Oct 2020 11:44:05 -0700
+Subject: [PATCH] Use faster random implementation
+
+Replace usages of random in world and entity classes with FastRandom, an adapter for SplittableRandom. This nearly doubles random performance across the board.
+
+This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
+
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 3a4d7979ac1f348932e72df3a336e96de3bea4e3..316072c5cfc27e303e12ec73477e8095f1e77b2a 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -61,7 +61,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+ 
+     // Paper start
+     boolean isQueuedForRegister = false;
+-    public static Random SHARED_RANDOM = new Random() {
++    public static Random SHARED_RANDOM = new xyz.nkomarn.hydrinity.util.FastRandom() { // Hydrinity - faster random
+         private boolean locked = false;
+         @Override
+         public synchronized void setSeed(long seed) {
+diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
+index 6408c2a71b23cc8571442ceb94a3fc1141f3b014..e463e9800c40101c3d32ca8aee4825ec89931a02 100644
+--- a/src/main/java/net/minecraft/server/World.java
++++ b/src/main/java/net/minecraft/server/World.java
+@@ -56,7 +56,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable, ChunkRand
+     protected float rainLevel;
+     protected float lastThunderLevel;
+     protected float thunderLevel;
+-    public final Random random = new Random();
++    public final Random random = new xyz.nkomarn.hydrinity.util.FastRandom(); // Hydrinity - faster random
+     private final DimensionManager x;
+     public final WorldDataMutable worldData;
+     private final Supplier<GameProfilerFiller> methodProfiler;

@@ -171,6 +171,54 @@ index 0000000000000000000000000000000000000000..97ecbd1f0cf61ef565fa3554b75d8cc4
 +    public static final int[] EMPTY_ARRAY = new int[0];
 +    public static final int[] ZERO_ARRAY = new int[]{0};
 +}
+diff --git a/src/main/java/xyz/nkomarn/hydrinity/util/FastRandom.java b/src/main/java/xyz/nkomarn/hydrinity/util/FastRandom.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..c44f4b7b04bcec7bde8b931ff814eaadd1d27726
+--- /dev/null
++++ b/src/main/java/xyz/nkomarn/hydrinity/util/FastRandom.java
+@@ -0,0 +1,42 @@
++package xyz.nkomarn.hydrinity.util;
++
++import java.util.Random;
++import java.util.SplittableRandom;
++
++/**
++ * An adapter for {@link SplittableRandom} that extends {@link Random},
++ * allowing SplittableRandom to be used as a drop-in replacement for
++ * world random instances.
++ * <p>
++ * SplittableRandom is considerably more efficient than a standard Random,
++ * making world random performance roughly twice as fast. The downside of
++ * using this implementation is the lack of a setSeed() method.
++ */
++public class FastRandom extends Random {
++
++    private final SplittableRandom random;
++
++    public FastRandom() {
++        this.random = new SplittableRandom();
++    }
++
++    @Override
++    public boolean nextBoolean() {
++        return random.nextBoolean();
++    }
++
++    @Override
++    public int nextInt() {
++        return random.nextInt();
++    }
++
++    @Override
++    public float nextFloat() {
++        return (float) random.nextDouble();
++    }
++
++    @Override
++    public double nextDouble() {
++        return random.nextDouble();
++    }
++}
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/util/MathUtils.java b/src/main/java/xyz/nkomarn/hydrinity/util/MathUtils.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..fad859556c4091995339323991186159175dcd4e
