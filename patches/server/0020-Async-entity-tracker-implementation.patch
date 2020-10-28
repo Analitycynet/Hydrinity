@@ -142,14 +142,14 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
                  // Paper start - remove allocation of Vec3D here
                  //Vec3D vec3d = entityplayer.getPositionVector().d(this.tracker.getPositionVector()); // MC-155077, SPIGOT-5113
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 29d52444286756167ef40fb5eb684aa20a27f11a..c75ec809a3540814c744fe996f8f20144e5b535c 100644
+index 29d52444286756167ef40fb5eb684aa20a27f11a..c88cf841c93ece2c0a65271fa6fe20bfbb71e629 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -1613,6 +1613,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      }
  
      public void sendPacket(Packet<?> packet) {
-+        if (!minecraftServer.isMainThread()) minecraftServer.processQueue.add(() -> sendPacket(packet)); else // Hydrinity - async entity tracker
++        if (!minecraftServer.isMainThread()) minecraftServer.processQueue.add(() -> this.a(packet, null)); else // Hydrinity - async entity tracker
          this.a(packet, (GenericFutureListener) null);
      }
  
