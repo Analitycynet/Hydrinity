@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
+Date: Fri, 30 Oct 2020 16:16:35 -0700
+Subject: [PATCH] Configurable brand name
+
+This patch gives server owners the option to change the brand name that is displayed in the F3 debug menu.
+
+This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
+
+diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
+index 38f26e25cb7d022c0bec5a5928db70611a0d347a..1b15359540a42ac15e63b89e7223ab25a0edd781 100644
+--- a/src/main/java/net/minecraft/server/PlayerList.java
++++ b/src/main/java/net/minecraft/server/PlayerList.java
+@@ -188,7 +188,7 @@ public abstract class PlayerList {
+         // Spigot - view distance
+         playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), entityplayer.playerInteractManager.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.F(), this.s, worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), this.getMaxPlayers(), worldserver1.getChunkProvider().playerChunkMap.getLoadViewDistance(), flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld())); // Paper - no-tick view distance
+         entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
+-        playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
++        playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(xyz.nkomarn.hydrinity.HydrinityConfig.brandName))); // Hydrinity - configurable brand name
+         playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
+         playerconnection.sendPacket(new PacketPlayOutAbilities(entityplayer.abilities));
+         playerconnection.sendPacket(new PacketPlayOutHeldItemSlot(entityplayer.inventory.itemInHandIndex));
+diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
+index e02939edb67b81a7253f279da5f9558bae10fdf2..7adc0689cb30133d96b723df70309169286721e9 100644
+--- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
++++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
+@@ -136,6 +136,11 @@ public class HydrinityConfig {
+         entitySubmergedCheck = Math.max(1, getInt("settings.intervals.entity-submerged-check", 1));
+     }
+ 
++    public static String brandName = "Hydrinity";
++    private static void brandName() {
++        brandName = getString("settings.brand-name", "Hydrinity");
++    }
++
+     public static final class WorldConfig {
+ 
+         public final String worldName;
