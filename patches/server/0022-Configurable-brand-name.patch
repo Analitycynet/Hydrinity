@@ -21,11 +21,11 @@ index 38f26e25cb7d022c0bec5a5928db70611a0d347a..1b15359540a42ac15e63b89e7223ab25
          playerconnection.sendPacket(new PacketPlayOutAbilities(entityplayer.abilities));
          playerconnection.sendPacket(new PacketPlayOutHeldItemSlot(entityplayer.inventory.itemInHandIndex));
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index e02939edb67b81a7253f279da5f9558bae10fdf2..7adc0689cb30133d96b723df70309169286721e9 100644
+index 3afc56bcb341ce0a2c6d4bbb043877fa099a92e6..8125440fcda5216ce70039b9c35e50d00303d09f 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -136,6 +136,11 @@ public class HydrinityConfig {
-         entitySubmergedCheck = Math.max(1, getInt("settings.intervals.entity-submerged-check", 1));
+@@ -138,6 +138,11 @@ public class HydrinityConfig {
+         itemBlockCollisionCheck = Math.max(1, getInt("settings.intervals.item-block-collision-check", 1));
      }
  
 +    public static String brandName = "Hydrinity";

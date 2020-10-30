@@ -167,7 +167,7 @@ index 29d52444286756167ef40fb5eb684aa20a27f11a..c88cf841c93ece2c0a65271fa6fe20bf
      }
  
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index 8dc440f497a173a74aa2899df262308c46cf647b..e02939edb67b81a7253f279da5f9558bae10fdf2 100644
+index dc03e2af2ad1905a399a0ecefa4811b8f1ac9b8c..3afc56bcb341ce0a2c6d4bbb043877fa099a92e6 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 @@ -111,6 +111,11 @@ public class HydrinityConfig {
