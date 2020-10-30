@@ -106,10 +106,10 @@ index 0f4503940abbcf353d07276f3f25e56047dce344..f20f149dcf922d6ffb5a3b4205241554
                          .withRequiredArg()
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..5945954551c8cea320501fe9246ec96d1ea23679
+index 0000000000000000000000000000000000000000..d16115d1681abbd3fad2e353b995e76924dd0c08
 --- /dev/null
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -0,0 +1,182 @@
+@@ -0,0 +1,187 @@
 +package xyz.nkomarn.hydrinity;
 +
 +import org.bukkit.Bukkit;
@@ -186,6 +186,11 @@ index 0000000000000000000000000000000000000000..5945954551c8cea320501fe9246ec96d
 +
 +    static void set(final String path, final Object value) {
 +        HydrinityConfig.config.set(path, value);
++    }
++
++    static String getString(final String path, final String dfl) {
++        HydrinityConfig.config.addDefault(path, dfl);
++        return HydrinityConfig.config.getString(path, dfl);
 +    }
 +
 +    static boolean getBoolean(final String path, final boolean dfl) {

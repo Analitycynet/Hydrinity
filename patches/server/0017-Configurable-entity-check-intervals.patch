@@ -57,10 +57,10 @@ index 9ee74a39cbb624d6893045d4eed9624a616f78f8..887a2f613c2ac759a3ccdc773978897c
              } else if (flag && !this.world.getWorldBorder().a(this.getBoundingBox())) {
                  double d0 = this.world.getWorldBorder().a((Entity) this) + this.world.getWorldBorder().getDamageBuffer();
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index be4c231c77a2e64d89071f048241876be29c4046..bbfd1162e59e2d747bc77ff86a6516c8245921e2 100644
+index 071c9259d93a2ad628a3c0ff2b439187122399df..ddfdf9c0d3d1165ada3005a620720044fbf0088d 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -111,8 +111,14 @@ public class HydrinityConfig {
+@@ -116,8 +116,14 @@ public class HydrinityConfig {
      }
  
      public static int playerTimeStatisticsInterval = 1;

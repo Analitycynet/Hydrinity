@@ -30,10 +30,10 @@ index e4aab53484c6a7ffaf7658acd5b026b9a0c04d47..29d52444286756167ef40fb5eb684aa2
                      this.disconnect(com.destroystokyo.paper.PaperConfig.flyingKickVehicleMessage); // Paper - use configurable kick message
                      return;
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index e306361664ecf976b89ccb6838bb56d0b13ab599..1c76ab42e27cb4c181733cc90c85c1d3e0d5cc4b 100644
+index 67f34db5b51a6367f56d247a4b09f88872747666..9b80091f326df53ff26592337c77e23f8a136360 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -96,6 +96,11 @@ public class HydrinityConfig {
+@@ -101,6 +101,11 @@ public class HydrinityConfig {
          return HydrinityConfig.config.getDouble(path, dfl);
      }
  

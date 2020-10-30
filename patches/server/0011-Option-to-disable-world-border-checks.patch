@@ -42,10 +42,10 @@ index 26a8c4ffe26c4663ddb3596dce8c47026aa2d0c3..5a8012e6b48b8c96a44f2529815480bc
      }
  
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index a187439e07bdc2084686a6b2a5b73d925b269138..e306361664ecf976b89ccb6838bb56d0b13ab599 100644
+index d4601ef9d8ae357f03812b24408fb07175124d5b..67f34db5b51a6367f56d247a4b09f88872747666 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -183,5 +183,10 @@ public class HydrinityConfig {
+@@ -188,5 +188,10 @@ public class HydrinityConfig {
          private void dolphinTreasureSearching() {
              dolphinTreasureSearching = getBoolean("dolphin-treasure-searching", true);
          }

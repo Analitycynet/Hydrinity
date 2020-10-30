@@ -41,10 +41,10 @@ index ce4ebc96c01f3dacf4e4d0569d86f52140440d43..c421e3f74fc0739963c62f46d1768b6e
  
          int i = 29999999;
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index 6cc530f528b799023c1b9c57efd9bae268b119ca..be4c231c77a2e64d89071f048241876be29c4046 100644
+index 3a44de1ec1e4a7d9cfe895b2c2375d4961e72372..071c9259d93a2ad628a3c0ff2b439187122399df 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -110,6 +110,11 @@ public class HydrinityConfig {
+@@ -115,6 +115,11 @@ public class HydrinityConfig {
          criterionTriggerTick = getBoolean("settings.criterion-triggers.tick", true);
      }
  

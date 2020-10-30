@@ -22,10 +22,10 @@ index b5191eb0b10c90d5cd6be2fa68e955b7d625b4c6..055967f1d5f3a5c1c11323ef06474bb4
          }
  
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index 5945954551c8cea320501fe9246ec96d1ea23679..a187439e07bdc2084686a6b2a5b73d925b269138 100644
+index d16115d1681abbd3fad2e353b995e76924dd0c08..d4601ef9d8ae357f03812b24408fb07175124d5b 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -178,5 +178,10 @@ public class HydrinityConfig {
+@@ -183,5 +183,10 @@ public class HydrinityConfig {
              this.worldDefaults.addDefault(path, Double.valueOf(dfl));
              return this.config.getDouble(path, this.worldDefaults.getDouble(path));
          }
