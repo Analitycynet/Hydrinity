@@ -11,6 +11,19 @@ This patch is configurable, meaning the asynchronous tracker implementation can 
 
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
+diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
+index c1c680545e557ae144999b24961019b95a164aff..38b6ebc832646a199ce44540006fa4a7388e2028 100644
+--- a/src/main/java/net/minecraft/server/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/EntityPlayer.java
+@@ -48,7 +48,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+     public NetworkManager networkManager; // Paper
+     public final MinecraftServer server;
+     public final PlayerInteractManager playerInteractManager;
+-    public final Deque<Integer> removeQueue = new ArrayDeque<>(); // Paper
++    public final Deque<Integer> removeQueue = new java.util.concurrent.ConcurrentLinkedDeque<>(); // Paper // Hydrinity
+     private final AdvancementDataPlayer advancementDataPlayer;
+     private final ServerStatisticManager serverStatisticManager;
+     private float lastHealthScored = Float.MIN_VALUE;
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 index f322dccd834ff56b99f8796309709b5b6ac01456..0a94e04205c1f57a5956ea5945fdff543667e58a 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
