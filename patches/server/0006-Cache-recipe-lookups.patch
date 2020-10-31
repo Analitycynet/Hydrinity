@@ -8,7 +8,7 @@ Store recipes in a cache to speed up future lookups, as well as replace a stream
 This patch was originally created for the Yatopia project by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/CraftingManager.java b/src/main/java/net/minecraft/server/CraftingManager.java
-index 58ecbe1e20581dc9e78cdd2f4ece29cfa014da8a..bc100d690021971de64ba81e227450aa74e41d09 100644
+index 58ecbe1e20581dc9e78cdd2f4ece29cfa014da8a..a54935f5e46e121109a7207128898607f588e2fe 100644
 --- a/src/main/java/net/minecraft/server/CraftingManager.java
 +++ b/src/main/java/net/minecraft/server/CraftingManager.java
 @@ -31,6 +31,10 @@ public class CraftingManager extends ResourceDataJson {
@@ -34,7 +34,13 @@ index 58ecbe1e20581dc9e78cdd2f4ece29cfa014da8a..bc100d690021971de64ba81e227450aa
          CraftingManager.LOGGER.info("Loaded {} recipes", map1.size());
      }
  
-@@ -84,18 +93,29 @@ public class CraftingManager extends ResourceDataJson {
+@@ -79,23 +88,35 @@ public class CraftingManager extends ResourceDataJson {
+         } else {
+             map.putAndMoveToFirst(irecipe.getKey(), irecipe); // CraftBukkit - SPIGOT-4638: last recipe gets priority
+         }
++        ALL_RECIPES_CACHE.add(irecipe); // Hydrinity
+     }
+     // CraftBukkit end
  
      public <C extends IInventory, T extends IRecipe<C>> Optional<T> craft(Recipes<T> recipes, C c0, World world) {
          // CraftBukkit start
@@ -70,7 +76,7 @@ index 58ecbe1e20581dc9e78cdd2f4ece29cfa014da8a..bc100d690021971de64ba81e227450aa
      }
  
      public <C extends IInventory, T extends IRecipe<C>> List<T> b(Recipes<T> recipes, C c0, World world) {
-@@ -133,9 +153,7 @@ public class CraftingManager extends ResourceDataJson {
+@@ -133,9 +154,7 @@ public class CraftingManager extends ResourceDataJson {
      }
  
      public Collection<IRecipe<?>> b() {
@@ -81,7 +87,7 @@ index 58ecbe1e20581dc9e78cdd2f4ece29cfa014da8a..bc100d690021971de64ba81e227450aa
      }
  
      public Stream<MinecraftKey> d() {
-@@ -155,6 +173,10 @@ public class CraftingManager extends ResourceDataJson {
+@@ -155,6 +174,10 @@ public class CraftingManager extends ResourceDataJson {
      // CraftBukkit start
      public void clearRecipes() {
          this.recipes = Maps.newHashMap();
