@@ -10,7 +10,7 @@ A side effect of increasing the interval is slower suffocation damage. I find th
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index b424f96b25f23a038ccf26eece8f0d1924224e85..3a4d7979ac1f348932e72df3a336e96de3bea4e3 100644
+index b424f96b25f23a038ccf26eece8f0d1924224e85..7ef5ee8c36d14f0bd433f5290fcb9625bfadc724 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -1334,14 +1334,19 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -20,7 +20,7 @@ index b424f96b25f23a038ccf26eece8f0d1924224e85..3a4d7979ac1f348932e72df3a336e96d
 +    // Hydrinity start
 +    private boolean cachedFlag;
      protected boolean aJ() {
-+        if (xyz.nkomarn.hydrinity.util.MathUtils.fastMod(ticksLived, xyz.nkomarn.hydrinity.HydrinityConfig.entityWaterCheck) != 0) {
++        if (ticksLived % xyz.nkomarn.hydrinity.HydrinityConfig.entityWaterCheck != 0) {
          this.M.clear();
          this.aK();
          double d0 = this.world.getDimensionManager().isNether() ? 0.007D : 0.0023333333333333335D;
@@ -39,12 +39,12 @@ index b424f96b25f23a038ccf26eece8f0d1924224e85..3a4d7979ac1f348932e72df3a336e96d
      }
  
      private void m() {
-+        if (xyz.nkomarn.hydrinity.util.MathUtils.fastMod(ticksLived, xyz.nkomarn.hydrinity.HydrinityConfig.entitySubmergedCheck) != 0) return; // Hydrinity
++        if (ticksLived % xyz.nkomarn.hydrinity.HydrinityConfig.entitySubmergedCheck != 0) return; // Hydrinity
          this.N = this.a((Tag) TagsFluid.WATER);
          this.O = null;
          double d0 = this.getHeadY() - 0.1111111119389534D;
 diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
-index 04eff01825bcf4cc38a749902065a5f54e73f1d7..b59acd0a10a023ea78024e75204a5ebe0b7d2c67 100644
+index 04eff01825bcf4cc38a749902065a5f54e73f1d7..51925d2a076e7792dde38e3d6a67cda494897b83 100644
 --- a/src/main/java/net/minecraft/server/EntityInsentient.java
 +++ b/src/main/java/net/minecraft/server/EntityInsentient.java
 @@ -1542,11 +1542,13 @@ public abstract class EntityInsentient extends EntityLiving {
@@ -52,7 +52,7 @@ index 04eff01825bcf4cc38a749902065a5f54e73f1d7..b59acd0a10a023ea78024e75204a5ebe
      public boolean isInDaylight() { return this.eG(); } // Paper - OBFHELPER
      protected boolean eG() {
 +        // Hydrinity start - optimize entity daylight checks
-+        if (xyz.nkomarn.hydrinity.util.MathUtils.fastMod(ticksLived, xyz.nkomarn.hydrinity.HydrinityConfig.entityDaylightCheck) != 0) return false;
++        if (ticksLived % xyz.nkomarn.hydrinity.HydrinityConfig.entityDaylightCheck != 0) return false;
          if (this.world.isDay() && !this.world.isClientSide) {
              float f = this.aQ();
 -            BlockPosition blockposition = this.getVehicle() instanceof EntityBoat ? (new BlockPosition(this.locX(), (double) Math.round(this.locY()), this.locZ())).up() : new BlockPosition(this.locX(), (double) Math.round(this.locY()), this.locZ());
@@ -64,7 +64,7 @@ index 04eff01825bcf4cc38a749902065a5f54e73f1d7..b59acd0a10a023ea78024e75204a5ebe
              }
          }
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index bc4f84c8857aab45a69c915104de8d70b758698c..bd883a8ff150d24e6739e1ab201aa02a6f4c1762 100644
+index bc4f84c8857aab45a69c915104de8d70b758698c..c7ca045a3481ceb82877fc9a8ff8e2c9f532afb7 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -82,7 +82,7 @@ public class EntityItem extends Entity {
@@ -72,12 +72,12 @@ index bc4f84c8857aab45a69c915104de8d70b758698c..bd883a8ff150d24e6739e1ab201aa02a
              if (this.world.isClientSide) {
                  this.noclip = false;
 -            } else {
-+            } else if (xyz.nkomarn.hydrinity.util.MathUtils.fastMod(ticksLived, xyz.nkomarn.hydrinity.HydrinityConfig.itemBlockCollisionCheck) == 0) { // Hydrinity
++            } else if (ticksLived % xyz.nkomarn.hydrinity.HydrinityConfig.itemBlockCollisionCheck == 0) { // Hydrinity
                  this.noclip = !this.world.getCubes(this);
                  if (this.noclip) {
                      this.l(this.locX(), (this.getBoundingBox().minY + this.getBoundingBox().maxY) / 2.0D, this.locZ());
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 9ee74a39cbb624d6893045d4eed9624a616f78f8..887a2f613c2ac759a3ccdc773978897c81e6b469 100644
+index 9ee74a39cbb624d6893045d4eed9624a616f78f8..450833e7f2dfd66cc54a478ba542b709c46e2e2b 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -268,7 +268,7 @@ public abstract class EntityLiving extends Entity {
@@ -85,7 +85,7 @@ index 9ee74a39cbb624d6893045d4eed9624a616f78f8..887a2f613c2ac759a3ccdc773978897c
  
          if (this.isAlive()) {
 -            if (this.inBlock()) {
-+            if (xyz.nkomarn.hydrinity.util.MathUtils.fastMod(ticksLived, xyz.nkomarn.hydrinity.HydrinityConfig.entitySuffocationCheck) == 0 && this.inBlock()) { // Hydrinity - configurable suffocation check interval
++            if (ticksLived % xyz.nkomarn.hydrinity.HydrinityConfig.entitySuffocationCheck == 0 && this.inBlock()) { // Hydrinity - configurable suffocation check interval
                  this.damageEntity(DamageSource.STUCK, 1.0F);
              } else if (flag && !this.world.getWorldBorder().a(this.getBoundingBox())) {
                  double d0 = this.world.getWorldBorder().a((Entity) this) + this.world.getWorldBorder().getDamageBuffer();

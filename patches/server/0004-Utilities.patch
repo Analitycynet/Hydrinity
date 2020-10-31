@@ -219,26 +219,3 @@ index 0000000000000000000000000000000000000000..c44f4b7b04bcec7bde8b931ff814eaad
 +        return random.nextDouble();
 +    }
 +}
-diff --git a/src/main/java/xyz/nkomarn/hydrinity/util/MathUtils.java b/src/main/java/xyz/nkomarn/hydrinity/util/MathUtils.java
-new file mode 100644
-index 0000000000000000000000000000000000000000..fad859556c4091995339323991186159175dcd4e
---- /dev/null
-+++ b/src/main/java/xyz/nkomarn/hydrinity/util/MathUtils.java
-@@ -0,0 +1,17 @@
-+package xyz.nkomarn.hydrinity.util;
-+
-+public class MathUtils {
-+
-+    /**
-+     * An efficient modulo implementation that avoids the use of loops
-+     * and instead uses faster bitwise operations to achieve the fastest
-+     * possible execution time.
-+     *
-+     * @param dividend the dividend
-+     * @param divisor the divisor
-+     * @return the remainder
-+     */
-+    public static int fastMod(int dividend, int divisor) {
-+        return dividend & (divisor - 1);
-+    }
-+}

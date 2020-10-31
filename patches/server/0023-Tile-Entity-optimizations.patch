@@ -7,19 +7,6 @@ This patch includes various tile entity optimizations. Normally, these aren't go
 
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
-diff --git a/src/main/java/net/minecraft/server/TileEntityBeacon.java b/src/main/java/net/minecraft/server/TileEntityBeacon.java
-index c6b7bc3dc1445269c1562c308b386ce480d70ef3..0b77e8ff22da042772c0bfe71c9c3fdfa92782be 100644
---- a/src/main/java/net/minecraft/server/TileEntityBeacon.java
-+++ b/src/main/java/net/minecraft/server/TileEntityBeacon.java
-@@ -143,7 +143,7 @@ public class TileEntityBeacon extends TileEntity implements ITileInventory, ITic
-         }
- 
-         i1 = this.levels;
--        if (this.world.getTime() % 80L == 0L) {
-+        if (xyz.nkomarn.hydrinity.util.MathUtils.fastMod((int) world.getTime(), 80) == 0) { // Hydrinity
-             if (!this.c.isEmpty()) {
-                 this.a(i, j, k);
-             }
 diff --git a/src/main/java/net/minecraft/server/TileEntityBeehive.java b/src/main/java/net/minecraft/server/TileEntityBeehive.java
 index a60e0872d51aeb330bd5334e35f18ad0ed63834e..0262dfe3e3dc9fbd0c2d4754a28b9603672685b6 100644
 --- a/src/main/java/net/minecraft/server/TileEntityBeehive.java

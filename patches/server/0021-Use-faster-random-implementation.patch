@@ -8,7 +8,7 @@ Replace usages of random in world and entity classes with FastRandom, an adapter
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 3a4d7979ac1f348932e72df3a336e96de3bea4e3..316072c5cfc27e303e12ec73477e8095f1e77b2a 100644
+index 7ef5ee8c36d14f0bd433f5290fcb9625bfadc724..fd7fb0fb6b220a0f8942d4c0e0d0289c10080bec 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -61,7 +61,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
