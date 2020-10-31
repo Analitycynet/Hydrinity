@@ -43,6 +43,26 @@ index b424f96b25f23a038ccf26eece8f0d1924224e85..3a4d7979ac1f348932e72df3a336e96d
          this.N = this.a((Tag) TagsFluid.WATER);
          this.O = null;
          double d0 = this.getHeadY() - 0.1111111119389534D;
+diff --git a/src/main/java/net/minecraft/server/EntityInsentient.java b/src/main/java/net/minecraft/server/EntityInsentient.java
+index 04eff01825bcf4cc38a749902065a5f54e73f1d7..b59acd0a10a023ea78024e75204a5ebe0b7d2c67 100644
+--- a/src/main/java/net/minecraft/server/EntityInsentient.java
++++ b/src/main/java/net/minecraft/server/EntityInsentient.java
+@@ -1542,11 +1542,13 @@ public abstract class EntityInsentient extends EntityLiving {
+ 
+     public boolean isInDaylight() { return this.eG(); } // Paper - OBFHELPER
+     protected boolean eG() {
++        // Hydrinity start - optimize entity daylight checks
++        if (xyz.nkomarn.hydrinity.util.MathUtils.fastMod(ticksLived, xyz.nkomarn.hydrinity.HydrinityConfig.entityDaylightCheck) != 0) return false;
+         if (this.world.isDay() && !this.world.isClientSide) {
+             float f = this.aQ();
+-            BlockPosition blockposition = this.getVehicle() instanceof EntityBoat ? (new BlockPosition(this.locX(), (double) Math.round(this.locY()), this.locZ())).up() : new BlockPosition(this.locX(), (double) Math.round(this.locY()), this.locZ());
++            BlockPosition blockposition = this.getVehicle() instanceof EntityBoat ? (new BlockPosition(this.locX(), (double) Math.round(this.locY()) + 1, this.locZ())) : new BlockPosition(this.locX(), (double) Math.round(this.locY()), this.locZ());
+ 
+-            if (f > 0.5F && this.random.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.world.e(blockposition)) {
++            if (f > 0.5F && this.world.e(blockposition)) { // Hydrinity end
+                 return true;
+             }
+         }
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
 index bc4f84c8857aab45a69c915104de8d70b758698c..bd883a8ff150d24e6739e1ab201aa02a6f4c1762 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
@@ -70,22 +90,24 @@ index 9ee74a39cbb624d6893045d4eed9624a616f78f8..887a2f613c2ac759a3ccdc773978897c
              } else if (flag && !this.world.getWorldBorder().a(this.getBoundingBox())) {
                  double d0 = this.world.getWorldBorder().a((Entity) this) + this.world.getWorldBorder().getDamageBuffer();
 diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-index 071c9259d93a2ad628a3c0ff2b439187122399df..1d3e410678e526164ff33c1adc0adaf4a2554ce6 100644
+index 071c9259d93a2ad628a3c0ff2b439187122399df..9b340c2e8448ff3be2cd2596d295e799429559a3 100644
 --- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
 +++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
-@@ -116,8 +116,16 @@ public class HydrinityConfig {
+@@ -116,8 +116,18 @@ public class HydrinityConfig {
      }
  
      public static int playerTimeStatisticsInterval = 1;
 +    public static int entitySuffocationCheck = 1;
 +    public static int entityWaterCheck = 1;
 +    public static int entitySubmergedCheck = 1;
++    public static int entityDaylightCheck = 1;
 +    public static int itemBlockCollisionCheck = 1;
      private static void intervals() {
          playerTimeStatisticsInterval = Math.max(1, getInt("settings.intervals.player-time-statistics", 1));
 +        entitySuffocationCheck = Math.max(1, getInt("settings.intervals.entity-suffocation-check", 1));
 +        entityWaterCheck = Math.max(1, getInt("settings.intervals.entity-water-check", 1));
 +        entitySubmergedCheck = Math.max(1, getInt("settings.intervals.entity-submerged-check", 1));
++        entityDaylightCheck = Math.max(1, getInt("settings.intervals.entity-daylight-check", 1));
 +        itemBlockCollisionCheck = Math.max(1, getInt("settings.intervals.item-block-collision-check", 1));
      }
  
