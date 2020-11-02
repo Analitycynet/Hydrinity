@@ -6,60 +6,21 @@ Subject: [PATCH] Filter useless entity packets
 This patch prevents useless packets (zero movement packets) from being sent in the entity tracker. This is especially useful with the async entity tracker optimization since it prevents unnecessary runnables in the processQueue, overall improving performance.
 
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index 0a94e04205c1f57a5956ea5945fdff543667e58a..61d9dd95e4ad8379bbb3cbc23e93c863023ddab6 100644
+index 0a94e04205c1f57a5956ea5945fdff543667e58a..685e5d7738d83e0642b4e0601a6abf668dc85428 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-@@ -174,6 +174,7 @@ public class EntityTrackerEntry {
-                         this.o = 0;
-                         packet1 = new PacketPlayOutEntityTeleport(this.tracker);
-                     }
-+                    if (isUselessPacket(packet1)) packet1 = null; // Hydrinity - filter useless packets
-                 }
- 
-                 if ((this.e || this.tracker.impulse || this.tracker instanceof EntityLiving && ((EntityLiving) this.tracker).isGliding()) && this.tickCounter > 0) {
-@@ -262,6 +263,24 @@ public class EntityTrackerEntry {
- 
-     }
- 
-+    // Hydrinity start - filter useless packets
-+    private boolean isUselessPacket(Packet<?> packet) {
-+        if (packet instanceof PacketPlayOutEntity) {
-+            var entityPacket = (PacketPlayOutEntity) packet;
-+
-+            if (entityPacket instanceof PacketPlayOutEntity.PacketPlayOutRelEntityMove) {
-+                return entityPacket.getX() == 0 && entityPacket.getY() == 0 && entityPacket.getZ() == 0;
-+            } else if (entityPacket instanceof PacketPlayOutEntity.PacketPlayOutRelEntityMoveLook) {
-+                return entityPacket.getX() == 0 && entityPacket.getY() == 0 && entityPacket.getZ() == 0 && entityPacket.getYaw() == 0 && entityPacket.getPitch() == 0;
-+            } else if (entityPacket instanceof PacketPlayOutEntity.PacketPlayOutEntityLook) {
-+                return entityPacket.getYaw() == 0 && entityPacket.getPitch() == 0;
-+            }
-+        }
-+
-+        return false;
-+    }
-+    // Hydrinity end
-+
-     public void a(EntityPlayer entityplayer) {
-         this.tracker.c(entityplayer);
-         entityplayer.c(this.tracker);
-diff --git a/src/main/java/net/minecraft/server/PacketPlayOutEntity.java b/src/main/java/net/minecraft/server/PacketPlayOutEntity.java
-index e5da2b19c1177ba7f88f0aaad9d810bb313ce67b..b9d49c897b17086210884a64c03792be64d37e20 100644
---- a/src/main/java/net/minecraft/server/PacketPlayOutEntity.java
-+++ b/src/main/java/net/minecraft/server/PacketPlayOutEntity.java
-@@ -5,11 +5,11 @@ import java.io.IOException;
- public class PacketPlayOutEntity implements Packet<PacketListenerPlayOut> {
- 
-     protected int a;
--    protected short b;
--    protected short c;
--    protected short d;
--    protected byte e;
--    protected byte f;
-+    protected short b; public short getX() { return b; } // Hydrinity - OBFHELPER
-+    protected short c; public short getY() { return c; } // Hydrinity - OBFHELPER
-+    protected short d; public short getZ() { return d; } // Hydrinity - OBFHELPER
-+    protected byte e; public byte getYaw() { return e; } // Hydrinity - OBFHELPER
-+    protected byte f; public byte getPitch() { return f; } // Hydrinity - OBFHELPER
-     protected boolean g;
-     protected boolean h;
-     protected boolean i;
+@@ -162,11 +162,14 @@ public class EntityTrackerEntry {
+                     if (!flag4 && this.o <= 400 && !this.q && this.r == this.tracker.isOnGround()) {
+                         if ((!flag2 || !flag3) && !(this.tracker instanceof EntityArrow)) {
+                             if (flag2) {
++                                if (!(k == 0 && l == 0 && i1 == 0)) // Hydrinity - filter useless entity packets
+                                 packet1 = new PacketPlayOutEntity.PacketPlayOutRelEntityMove(this.tracker.getId(), (short) ((int) k), (short) ((int) l), (short) ((int) i1), this.tracker.isOnGround());
+                             } else if (flag3) {
++                                if (!(i == 0 && j == 0)) // Hydrinity - filter useless entity packets
+                                 packet1 = new PacketPlayOutEntity.PacketPlayOutEntityLook(this.tracker.getId(), (byte) i, (byte) j, this.tracker.isOnGround());
+                             }
+                         } else {
++                            if (!(k == 0 && l == 0 && i1 == 0 && i == 0 && j == 0)) // Hydrinity - filter useless entity packets
+                             packet1 = new PacketPlayOutEntity.PacketPlayOutRelEntityMoveLook(this.tracker.getId(), (short) ((int) k), (short) ((int) l), (short) ((int) i1), (byte) i, (byte) j, this.tracker.isOnGround());
+                         }
+                     } else {
