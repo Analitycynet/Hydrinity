@@ -21,10 +21,10 @@ index 7ef5ee8c36d14f0bd433f5290fcb9625bfadc724..fd7fb0fb6b220a0f8942d4c0e0d0289c
          @Override
          public synchronized void setSeed(long seed) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6408c2a71b23cc8571442ceb94a3fc1141f3b014..e463e9800c40101c3d32ca8aee4825ec89931a02 100644
+index e3bdbf062defa99a0c7e7d6b12737c3965a0f523..a053dc2b2344739db4598d567890443e8c58f155 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -56,7 +56,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable, ChunkRand
+@@ -54,7 +54,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      protected float rainLevel;
      protected float lastThunderLevel;
      protected float thunderLevel;
