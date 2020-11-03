@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: William Blake Galbreath <Blake.Galbreath@GMail.com>
+Date: Tue, 3 Nov 2020 07:08:33 -0800
+Subject: [PATCH] Purpur configurable villager brain ticks
+
+This patch includes configuration settings to alter villager brain ticks, as well as only use the villager brain ticks when lagging.
+
+This patch was originally created for the Purpur project <https://github.com/pl3xgaming/Purpur> by William Blake Galbreath <Blake.Galbreath@GMail.com> under the MIT license.
+
+diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
+index c10ff09dd005c0c8b3cd374d9de82e77efcd9097..75cc83fb19bd5ec737da044265201fea3bca787b 100644
+--- a/src/main/java/net/minecraft/server/EntityVillager.java
++++ b/src/main/java/net/minecraft/server/EntityVillager.java
+@@ -58,6 +58,7 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
+     }, MemoryModuleType.MEETING_POINT, (entityvillager, villageplacetype) -> {
+         return villageplacetype == VillagePlaceType.s;
+     });
++    private final int brainTickOffset; // Hydrinity
+ 
+     public EntityVillager(EntityTypes<? extends EntityVillager> entitytypes, World world) {
+         this(entitytypes, world, VillagerType.PLAINS);
+@@ -70,6 +71,7 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
+         this.getNavigation().d(true);
+         this.setCanPickupLoot(true);
+         this.setVillagerData(this.getVillagerData().withType(villagertype).withProfession(VillagerProfession.NONE));
++        this.brainTickOffset = getRandom().nextInt(100); // Hydrinity
+     }
+ 
+     @Override
+@@ -166,6 +168,10 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
+     protected void mobTick() { mobTick(false); }
+     protected void mobTick(boolean inactive) {
+         this.world.getMethodProfiler().enter("villagerBrain");
++        // Hydrinity start
++        boolean tick = (world.getTime() + brainTickOffset) % world.hydrinityConfig.villagerBrainTicks == 0;
++        if (((WorldServer) world).getMinecraftServer().lagging ? tick : world.hydrinityConfig.villagerUseBrainTicksOnlyWhenLagging || tick)
++        // Hydrinity end
+         if (!inactive) this.getBehaviorController().a((WorldServer) this.world, this); // CraftBukkit - decompile error // Paper
+         this.world.getMethodProfiler().exit();
+         if (this.bF) {
+diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
+index 82e30cdbabdfd001aaa64b09413796da8800f759..22e3872aaba9b4eb3537ec1a747f1422f63a1e8d 100644
+--- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
++++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
+@@ -242,5 +242,12 @@ public class HydrinityConfig {
+         private void worldBorderChecks() {
+             worldBorderChecks = getBoolean("world-border-checks", true);
+         }
++
++        public int villagerBrainTicks = 1;
++        public boolean villagerUseBrainTicksOnlyWhenLagging = true;
++        private void villagerSettings() {
++            villagerBrainTicks = getInt("villager.brain-ticks", villagerBrainTicks);
++            villagerUseBrainTicksOnlyWhenLagging = getBoolean("villager.use-brain-ticks-only-when-lagging", villagerUseBrainTicksOnlyWhenLagging);
++        }
+     }
+ }

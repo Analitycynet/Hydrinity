@@ -1,0 +1,45 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: William Blake Galbreath <Blake.Galbreath@GMail.com>
+Date: Tue, 3 Nov 2020 07:06:12 -0800
+Subject: [PATCH] Purpur lagging threshold
+
+This patch does nothing meaningful by itself, but can be used by other patches to check if the server is considered lagging. The threshold for what it considers "lagging" is configurable in the config.
+
+This patch was originally created for the Purpur project <https://github.com/pl3xgaming/Purpur> by William Blake Galbreath <Blake.Galbreath@GMail.com> under the MIT license.
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index c5d302f5a7607366b3312753f6baa064375fbd2a..4273daf802145156a50220a9a329a19cc1a42d01 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -166,6 +166,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+     public static final int TICK_TIME = 1000000000 / TPS;
+     private static final int SAMPLE_INTERVAL = 20; // Paper
+     public final double[] recentTps = new double[ 3 ];
++    public boolean lagging = false; // Hydrinity
+     public final SlackActivityAccountant slackActivityAccountant = new SlackActivityAccountant();
+     // Spigot end
+ 
+@@ -983,6 +984,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                         recentTps[1] = tps5.getAverage();
+                         recentTps[2] = tps15.getAverage();
+                         // Paper end
++                        lagging = recentTps[0] < xyz.nkomarn.hydrinity.HydrinityConfig.laggingThreshold; // Hydrinity
+                         tickSection = curTime;
+                     }
+                     // Tuinity - replace logic
+diff --git a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
+index 202c8c99a82a963a8baf5e96ec1f21d68510e768..82e30cdbabdfd001aaa64b09413796da8800f759 100644
+--- a/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
++++ b/src/main/java/xyz/nkomarn/hydrinity/HydrinityConfig.java
+@@ -145,6 +145,11 @@ public class HydrinityConfig {
+         brandName = getString("settings.brand-name", "Hydrinity");
+     }
+ 
++    public static double laggingThreshold = 19.0D;
++    private static void tickLoopSettings() {
++        laggingThreshold = getDouble("settings.lagging-threshold", laggingThreshold);
++    }
++
+     public static final class WorldConfig {
+ 
+         public final String worldName;
