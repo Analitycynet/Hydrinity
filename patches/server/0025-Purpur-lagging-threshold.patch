@@ -8,10 +8,10 @@ This patch does nothing meaningful by itself, but can be used by other patches t
 This patch was originally created for the Purpur project <https://github.com/pl3xgaming/Purpur> by William Blake Galbreath <Blake.Galbreath@GMail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index c5d302f5a7607366b3312753f6baa064375fbd2a..4273daf802145156a50220a9a329a19cc1a42d01 100644
+index ca45fdafd7aab3668bd00a72f27e2a4eeb322e6c..4a5f44f3ae00387155904ee2d69e6784d347f9d2 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -166,6 +166,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -167,6 +167,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      public static final int TICK_TIME = 1000000000 / TPS;
      private static final int SAMPLE_INTERVAL = 20; // Paper
      public final double[] recentTps = new double[ 3 ];
@@ -19,7 +19,7 @@ index c5d302f5a7607366b3312753f6baa064375fbd2a..4273daf802145156a50220a9a329a19c
      public final SlackActivityAccountant slackActivityAccountant = new SlackActivityAccountant();
      // Spigot end
  
-@@ -983,6 +984,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -986,6 +987,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          recentTps[1] = tps5.getAverage();
                          recentTps[2] = tps15.getAverage();
                          // Paper end

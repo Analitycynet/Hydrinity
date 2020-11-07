@@ -12,7 +12,7 @@ This patch is configurable, meaning the asynchronous tracker implementation can 
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index c1c680545e557ae144999b24961019b95a164aff..38b6ebc832646a199ce44540006fa4a7388e2028 100644
+index 921dec1f18d1200b1b85e11ccae100ca6bf27483..e97fe2922d220fbb6f86d976dcb359f162bb4bbd 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -48,7 +48,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -70,7 +70,7 @@ index f322dccd834ff56b99f8796309709b5b6ac01456..0a94e04205c1f57a5956ea5945fdff54
              this.tracker.velocityChanged = false;
          }
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc98f3393d 100644
+index 2a8455b813853693e20f368d3ece78d9424a413a..6013039848f5ff70ee514151916255214f75a301 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -117,6 +117,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -81,7 +81,7 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
  
      // CraftBukkit start - recursion-safe executor for Chunk loadCallback() and unloadCallback()
      public final CallbackExecutor callbackExecutor = new CallbackExecutor();
-@@ -301,7 +302,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -313,7 +314,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          this.unloadQueue = new LongOpenHashSet();
          this.u = new AtomicInteger();
          this.playerMap = new PlayerMap();
@@ -90,7 +90,7 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
          this.z = new Long2ByteOpenHashMap();
          this.A = new com.destroystokyo.paper.utils.CachedSizeConcurrentLinkedQueue<>(); // Paper - need constant-time size()
          this.definedStructureManager = definedstructuremanager;
-@@ -2006,7 +2007,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -2040,7 +2041,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      protected void addEntity(Entity entity) {
@@ -99,7 +99,7 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
          // Paper start - ignore and warn about illegal addEntity calls instead of crashing server
          if (!entity.valid || entity.world != this.world || this.trackedEntities.containsKey(entity.getId())) {
              new Throwable("[ERROR] Illegal PlayerChunkMap::addEntity for world " + this.world.getWorld().getName()
-@@ -2050,7 +2051,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -2084,7 +2085,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      }
  
      protected void removeEntity(Entity entity) {
@@ -108,7 +108,7 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
          if (entity instanceof EntityPlayer) {
              EntityPlayer entityplayer = (EntityPlayer) entity;
  
-@@ -2102,6 +2103,18 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -2136,6 +2137,18 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
      protected void g() {
          // Paper start - optimized tracker
          if (true) {
@@ -127,7 +127,7 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
              this.processTrackQueue();
              return;
          }
-@@ -2343,7 +2356,7 @@ Sections go from 0..16. Now whenever a section is not empty, it can potentially
+@@ -2377,7 +2390,7 @@ Sections go from 0..16. Now whenever a section is not empty, it can potentially
          // Paper start
          // Replace trackedPlayers Set with a Map. The value is true until the player receives
          // their first update (which is forced to have absolute coordinates), false afterward.
@@ -136,7 +136,7 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
          public Set<EntityPlayer> trackedPlayers = trackedPlayerMap.keySet();
  
          public EntityTracker(Entity entity, int i, int j, boolean flag) {
-@@ -2428,7 +2441,7 @@ Sections go from 0..16. Now whenever a section is not empty, it can potentially
+@@ -2462,7 +2475,7 @@ Sections go from 0..16. Now whenever a section is not empty, it can potentially
          }
  
          public void clear(EntityPlayer entityplayer) {
@@ -145,7 +145,7 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
              if (this.trackedPlayers.remove(entityplayer)) {
                  this.trackerEntry.a(entityplayer);
              }
-@@ -2436,7 +2449,7 @@ Sections go from 0..16. Now whenever a section is not empty, it can potentially
+@@ -2470,7 +2483,7 @@ Sections go from 0..16. Now whenever a section is not empty, it can potentially
          }
  
          public void updatePlayer(EntityPlayer entityplayer) {
@@ -155,10 +155,10 @@ index c72ca2a6ad76f2956350b488b4909495b9d2302e..d5c35c801a57b8ca95d0b1e9c381b7bc
                  // Paper start - remove allocation of Vec3D here
                  //Vec3D vec3d = entityplayer.getPositionVector().d(this.tracker.getPositionVector()); // MC-155077, SPIGOT-5113
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 29d52444286756167ef40fb5eb684aa20a27f11a..c88cf841c93ece2c0a65271fa6fe20bfbb71e629 100644
+index a3644dc708dd703bb94da072ab7cac9689679e75..1b67aa2552261a7a7e45bf9b541e56964d821373 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -1613,6 +1613,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -1693,6 +1693,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
      }
  
      public void sendPacket(Packet<?> packet) {

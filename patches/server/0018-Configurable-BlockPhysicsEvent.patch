@@ -10,10 +10,10 @@ This patch implements a hard toggle for the event.
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f6247332a0af1a4884f3eec0089486e265870773..c5d302f5a7607366b3312753f6baa064375fbd2a 100644
+index 6a17d0aec57a29b560cf1d2ce9e16c1be55587a4..ca45fdafd7aab3668bd00a72f27e2a4eeb322e6c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1394,7 +1394,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1397,7 +1397,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
          while (iterator.hasNext()) {
              WorldServer worldserver = (WorldServer) iterator.next();

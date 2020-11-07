@@ -8,7 +8,7 @@ This patch replaces the ConcurrentLinkedQueue and LockSupport hack to reduce tim
 Parts of this patch were originally created for the Yatopia <https://github.com/YatopiaMC/Yatopia> project by ishland <ishlandmc@yeah.net> and Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/IAsyncTaskHandler.java b/src/main/java/net/minecraft/server/IAsyncTaskHandler.java
-index 5df6be7e8d9b1295ed0700b3be90c3778fc7d77c..2ff8aa57b686a559764776110b48891f8de0fed8 100644
+index 27db247aa40e0516302c74b9bf00c631a8607af5..a4a077ff2265aec51bfce971f6d916778758ada1 100644
 --- a/src/main/java/net/minecraft/server/IAsyncTaskHandler.java
 +++ b/src/main/java/net/minecraft/server/IAsyncTaskHandler.java
 @@ -13,8 +13,9 @@ public abstract class IAsyncTaskHandler<R extends Runnable> implements Mailbox<R
@@ -38,7 +38,7 @@ index 5df6be7e8d9b1295ed0700b3be90c3778fc7d77c..2ff8aa57b686a559764776110b48891f
 -        R r0 = this.d.peek(); // Paper - decompile fix
 +        R r0 = nextTask; // Paper - decompile fix
 +        if (r0 == null && !d.isEmpty()) {
-+            bl(); // Hydrinity
++            bm(); // Hydrinity
 +            r0 = nextTask;
 +        }
  
@@ -58,7 +58,7 @@ index 5df6be7e8d9b1295ed0700b3be90c3778fc7d77c..2ff8aa57b686a559764776110b48891f
 @@ -127,8 +135,12 @@ public abstract class IAsyncTaskHandler<R extends Runnable> implements Mailbox<R
      }
  
-     protected void bl() {
+     protected void bm() {
 -        Thread.yield();
 -        LockSupport.parkNanos("waiting for tasks", 100000L);
 +        // Hydrinity start - poll for next task in queue

@@ -67,7 +67,7 @@ index 5d3bb5f393a1e0e4a2e8b9a466530a91279697a9..6015aa4e99e5b1d99241b5319e0fec93
              j = aenumdirection1.length;
  
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index 0e000c7186d9f2ed6e0a1061f83d7f2d5695dc37..9ee74a39cbb624d6893045d4eed9624a616f78f8 100644
+index 87cd6fb0c051e66d7c927769c375268c9a663ff8..4f50ee557e74e29dcacea3e37b3b3df2bad3050f 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
 @@ -2570,10 +2570,12 @@ public abstract class EntityLiving extends Entity {

@@ -5,7 +5,7 @@ Subject: [PATCH] POM Changes
 
 
 diff --git a/pom.xml b/pom.xml
-index 3b5dcb434f3357183859281941139a1c86d9cb1b..bde9566e3fe7fa1cbd9b00bf15f23be065e4da68 100644
+index 4516ba097e8afc3e422efc368311fa66e967c05a..b7ee476bbcefe884f6ca25fcd8cfbf864bc128d7 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,18 @@
@@ -22,7 +22,7 @@ index 3b5dcb434f3357183859281941139a1c86d9cb1b..bde9566e3fe7fa1cbd9b00bf15f23be0
  
 -    <artifactId>tuinity-api</artifactId>
 +    <artifactId>hydrinity-api</artifactId>
-     <version>1.16.3-R0.1-SNAPSHOT</version>
+     <version>1.16.4-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Tuinity-API</name>

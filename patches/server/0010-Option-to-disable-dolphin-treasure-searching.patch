@@ -10,7 +10,7 @@ This patch was originally created for the Purpur project <https://github.com/pl3
 Co-authored-by: Mykyta Komarnytskyy <nkomarn@hotmail.com>
 
 diff --git a/src/main/java/net/minecraft/server/EntityDolphin.java b/src/main/java/net/minecraft/server/EntityDolphin.java
-index b5191eb0b10c90d5cd6be2fa68e955b7d625b4c6..055967f1d5f3a5c1c11323ef06474bb4f7316176 100644
+index 2916ee89ef7a14619703dfbe7efd5c78a2f34337..78c0ec913486f3e356ecd1aa3091544a275b266d 100644
 --- a/src/main/java/net/minecraft/server/EntityDolphin.java
 +++ b/src/main/java/net/minecraft/server/EntityDolphin.java
 @@ -329,6 +329,7 @@ public class EntityDolphin extends EntityWaterAnimal {

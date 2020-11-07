@@ -8,7 +8,7 @@ Replace usages of random in world and entity classes with FastRandom, an adapter
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 7ef5ee8c36d14f0bd433f5290fcb9625bfadc724..fd7fb0fb6b220a0f8942d4c0e0d0289c10080bec 100644
+index 6355cdadd8172d70ed81168a86ff9b3ba1b85d2a..72f07909273ff6dacd5617aae393e95c7a391e48 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -61,7 +61,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -21,7 +21,7 @@ index 7ef5ee8c36d14f0bd433f5290fcb9625bfadc724..fd7fb0fb6b220a0f8942d4c0e0d0289c
          @Override
          public synchronized void setSeed(long seed) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e3bdbf062defa99a0c7e7d6b12737c3965a0f523..a053dc2b2344739db4598d567890443e8c58f155 100644
+index a42dc7fca7efce851772d10f948ad51f3231bd24..955b9008784a5d48370a016ccbc4a84eba465b31 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -54,7 +54,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {

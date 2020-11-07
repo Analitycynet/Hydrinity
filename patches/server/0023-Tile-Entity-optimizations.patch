@@ -42,10 +42,10 @@ index 9b0c75332d9815657d96183e51e40cf14ee3ed75..76b120c2b2309f3d4557264cbb0b801c
          this.j = this.i;
          this.l = this.k;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index a053dc2b2344739db4598d567890443e8c58f155..951d3cb3c2f6823479ed2929e18d0d975578f8e2 100644
+index 955b9008784a5d48370a016ccbc4a84eba465b31..0ffb86e243c77b322c9f0063bf631ccc448eacf3 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -809,13 +809,18 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -837,13 +837,18 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
              if (!tileentity.isRemoved() && tileentity.hasWorld()) {
                  BlockPosition blockposition = tileentity.getPosition();
  
@@ -66,7 +66,7 @@ index a053dc2b2344739db4598d567890443e8c58f155..951d3cb3c2f6823479ed2929e18d0d97
                              ((ITickable) tileentity).tick();
                          } else {
                              tileentity.w();
-@@ -849,9 +854,12 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -877,9 +882,12 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                  this.tileEntityListTick.remove(tileTickPosition--);
                  // Spigot end
                  //this.tileEntityList.remove(tileentity); // Paper - remove unused list
@@ -82,7 +82,7 @@ index a053dc2b2344739db4598d567890443e8c58f155..951d3cb3c2f6823479ed2929e18d0d97
              }
          }
  
-@@ -870,8 +878,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -898,8 +906,11 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                      }
                      // CraftBukkit end */
  
@@ -96,7 +96,7 @@ index a053dc2b2344739db4598d567890443e8c58f155..951d3cb3c2f6823479ed2929e18d0d97
                          IBlockData iblockdata = chunk.getType(tileentity1.getPosition());
  
                          chunk.setTileEntity(tileentity1.getPosition(), tileentity1);
-@@ -882,7 +893,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -910,7 +921,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                              this.a(tileentity1);
                          }
                          // CraftBukkit end

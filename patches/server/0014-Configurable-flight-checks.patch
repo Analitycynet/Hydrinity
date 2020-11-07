@@ -8,10 +8,10 @@ Adds an option to disable flight checking, which can be unreliable at best for p
 This patch was created for the Hydrinity project <https://github.com/Hydrinity/Hydrinity> by Mykyta Komarnytskyy <nkomarn@hotmail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index e4aab53484c6a7ffaf7658acd5b026b9a0c04d47..29d52444286756167ef40fb5eb684aa20a27f11a 100644
+index 490626ecd31ea218e48e960fe29b8abaca114ee9..a3644dc708dd703bb94da072ab7cac9689679e75 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
-@@ -165,7 +165,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -176,7 +176,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
          ++this.e;
          this.processedMovePackets = this.receivedMovePackets;
          if (this.B && !this.player.isSleeping()) {
@@ -20,7 +20,7 @@ index e4aab53484c6a7ffaf7658acd5b026b9a0c04d47..29d52444286756167ef40fb5eb684aa2
                  PlayerConnection.LOGGER.warn("{} was kicked for floating too long!", this.player.getDisplayName().getString());
                  this.disconnect(com.destroystokyo.paper.PaperConfig.flyingKickPlayerMessage); // Paper - use configurable kick message
                  return;
-@@ -184,7 +184,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+@@ -195,7 +195,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
              this.w = this.r.locY();
              this.x = this.r.locZ();
              if (this.D && this.player.getRootVehicle().getRidingPassenger() == this.player) {

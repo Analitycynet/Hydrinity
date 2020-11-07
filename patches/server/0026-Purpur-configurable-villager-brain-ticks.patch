@@ -8,7 +8,7 @@ This patch includes configuration settings to alter villager brain ticks, as wel
 This patch was originally created for the Purpur project <https://github.com/pl3xgaming/Purpur> by William Blake Galbreath <Blake.Galbreath@GMail.com> under the MIT license.
 
 diff --git a/src/main/java/net/minecraft/server/EntityVillager.java b/src/main/java/net/minecraft/server/EntityVillager.java
-index c10ff09dd005c0c8b3cd374d9de82e77efcd9097..75cc83fb19bd5ec737da044265201fea3bca787b 100644
+index 039d5cc20a6de46b0812b428e2f6526905ece2bf..b03c207113e20214834d7e70486f71382c656660 100644
 --- a/src/main/java/net/minecraft/server/EntityVillager.java
 +++ b/src/main/java/net/minecraft/server/EntityVillager.java
 @@ -58,6 +58,7 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation

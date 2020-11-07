@@ -877,10 +877,10 @@ index 0000000000000000000000000000000000000000..d9205a7860f5ceae2113aa5a6a1ac68f
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 86903aaa02054411ef713d7aa500a654e6f22c88..b424f96b25f23a038ccf26eece8f0d1924224e85 100644
+index 420557c27029e2464e3c02143a1724a9bf165268..70095752738d0a05c97f9e060412460449b784ff 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1057,6 +1057,18 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1086,6 +1086,18 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return vec3d1;
      }
  
@@ -899,13 +899,13 @@ index 86903aaa02054411ef713d7aa500a654e6f22c88..b424f96b25f23a038ccf26eece8f0d19
      public static double getXZSquared(Vec3D vec3d) { return Entity.c(vec3d); } // Tuinity - OBFHELPER
      public static double c(Vec3D vec3d) {
          return vec3d.x * vec3d.x + vec3d.z * vec3d.z;
-@@ -2146,9 +2158,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2176,9 +2188,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              float f1 = this.size.width * 0.8F;
              AxisAlignedBB axisalignedbb = AxisAlignedBB.g((double) f1, 0.10000000149011612D, (double) f1).d(this.locX(), this.getHeadY(), this.locZ());
  
--            return this.world.b(this, axisalignedbb, (iblockdata, blockposition) -> {
+-            return ((WorldServer)this.world).collidesWithAnyBlockOrWorldBorder(this, axisalignedbb, false, false, (iblockdata, blockposition) -> { // Tuinity - use optimised method
 -                return iblockdata.o(this.world, blockposition);
--            }).findAny().isPresent();
+-            }); // Tuinity - use optimised method
 +            return new me.jellysquid.mods.lithium.common.entity.movement.ChunkAwareBlockCollisionSweeper(world, this, axisalignedbb, me.jellysquid.mods.lithium.common.entity.movement.BlockCollisionPredicate.SUFFOCATES).getNextCollidedShape() != null; // Hydrinity - fast suffocation check
          }
      }
@@ -939,7 +939,7 @@ index b66c802d5e27518069bf42e577bcc9a26c4d873e..808306d9918101f0e0d4057983112396
  
      default Stream<VoxelShape> b(@Nullable Entity entity, AxisAlignedBB axisalignedbb, BiPredicate<IBlockData, BlockPosition> bipredicate) {
 diff --git a/src/main/java/net/minecraft/server/IEntityAccess.java b/src/main/java/net/minecraft/server/IEntityAccess.java
-index 882b82d8952d34f6e3c639404d1a1521dedf1bb0..92358247221a8a6662a0e6eae41f9e0216eed669 100644
+index 40ca3364d462dc7b5a4c1f8f353c758a421656bf..e6464ab53e90af4abd011107250fad6ee87ea70b 100644
 --- a/src/main/java/net/minecraft/server/IEntityAccess.java
 +++ b/src/main/java/net/minecraft/server/IEntityAccess.java
 @@ -62,6 +62,7 @@ public interface IEntityAccess {
